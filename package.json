@@ -1,0 +1,22 @@
+{
+  "name": "strip_proof_of_consumption",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yashmadhwal/STRIP_Supply_Chain.git"
+  },
+  "author": "yashmadhwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yashmadhwal/STRIP_Supply_Chain/issues"
+  },
+  "homepage": "https://github.com/yashmadhwal/STRIP_Supply_Chain#readme"
+}
