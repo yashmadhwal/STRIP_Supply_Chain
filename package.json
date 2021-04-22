@@ -18,5 +18,10 @@
   "bugs": {
     "url": "https://github.com/yashmadhwal/STRIP_Supply_Chain/issues"
   },
-  "homepage": "https://github.com/yashmadhwal/STRIP_Supply_Chain#readme"
+  "homepage": "https://github.com/yashmadhwal/STRIP_Supply_Chain#readme",
+  "dependencies": {
+    "ganache-cli": "^6.12.2",
+    "solc": "^0.8.4",
+    "truffle": "^5.1.65"
+  }
 }
