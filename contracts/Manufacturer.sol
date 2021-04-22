@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 // STRIP project
 
-pragma solidity >0.8.0;
+pragma solidity <0.6.5;
 
 contract Manufacturer{
 
@@ -33,7 +33,7 @@ contract Manufacturer{
     //FDA CSA Schedulings
     enum csaSchedulings{A,B,C,D,E,F,N} //these random Categories of CSA Schedulings, but we need only N.
 
-    constructor(){
+    constructor() public {
         owner = msg.sender;
         company = 'PharmaCompany'; //Pfizer U.S. Pharmaceulicals Gr
         // NOTE: Such method to deploy another contract, it is better when deploying using functionName
@@ -95,7 +95,7 @@ contract Consumer{
 
     Manufacturer manufacturere;
 
-    constructor(address _manufacturereAddress) {
+    constructor(address _manufacturereAddress) public {
         manufacturere = Manufacturer(_manufacturereAddress);
     }
 
