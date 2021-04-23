@@ -3,42 +3,60 @@
 <head>
     <title>STRIP Medicine</title>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="../static/css/style.css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 </head>
 <body>
     <!-- Form fields for Simple Open Auction -->
     <div id="create" class="tabcontent">
+        <div class="manufactureContainer">
+          <div id="logo">
+          </div>
+
         <form method="POST" action="/createPills">
-        <h2>PharmaCompany</h2>
+        <h1>Pharma Company</h1>
         <div class="input-group">
-            <h3>Manufacturer Address</h3>
+            <h3>Manufacturer Address:</h3>
             <input type="text" name="ManufacturerAddress" required placeholder="Manufacturer Address"/>
         </div>
         <br>
         <div class="input-group">
-            <input type="submit" value="Create Pill"/>
+            <input type="submit" id='PillBtn' value="Create Pill"/>
         </div>
         </form>
-        <h1 class="text message">Status:&nbsp;<span id="creation">{{ creationStatus }}</span></h1>
+        <h3 class="text message">TransactionHash:&nbsp;<span id="creation">{{ TransactionHash }}</span></h3>
+        <h3 class="text message">Status:&nbsp;<span id="creation">{{ creationStatus }}</span></h3>
+    </div>
     </div>
 
     <hr>
     <!-- Form fields for checking address balance -->
     <div id="bids" class="tabcontent">
-        <h2>Check highest Bidder & Bid</h2>
+        <h1>Consuming Pills</h1>
         <div class="input-group">
-            <form method="POST" action="/highestbidder">
-            <button class="btn" id="button-hbidder">Check highest bidder</button>
+            <form method="POST" action="/keccak256">
+              <div class="input-group">
+                  <h3>Personal Address</h3>
+                  <input type="number" name="keccakNumber" required placeholder="keccak256 Secret"/>
+              </div>
+              <br>
+            <button class="btn" id="button-hbidder">Check keccak256</button>
             </form>
         </div><br>
         <div class="input-group">
-            <form method="POST" action="/highestbid">
-            <button class="btn" id="button-hbid">Check highest bid</button>
+            <form method="POST" action="/consumePill">
+            <input type="text" name="ConsumerAddress" required placeholder="ConsumerAddress"/><br>
+<br>
+            <input type="text" name="KeccakSecret" required placeholder="Secret"/>
+<br>
+            <div class="consumePillBtn">
+                <button class="btn" id="button-hbid">consume Pill</button>
+            </div>
+
             </form>
         </div>
     </div>
-    <h1 class="text message">Highest Bidder:&nbsp;<span id="msghbidder">{{ highest_bidder }}</span></h1>
-    <h1 class="text message">Highest Bid:&nbsp;<span id="msghbid">{{ highest_bid }}</span></h1>
+    <h3 class="text message">keccak256:&nbsp;<span id="msghbidder">{{ keccak256 }}</span></h3>
+    <h3 class="text message">Status(Tx_Id):&nbsp;<span id="msghbid">{{ Status }}</span></h3>
 <hr>
     <div method="GET" class='reset'>
       <form action="/">
