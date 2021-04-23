@@ -99,14 +99,12 @@ contract Consumer{
         manufacturere = Manufacturer(_manufacturereAddress);
     }
 
-
     function consumeThePill(uint _pillString) public {
         //checking if the pill exists or not, if not the it is fake, else will be marked as consumed
         (uint pillToSearch,) = manufacturere.parentMapping(_pillString);
         require(pillToSearch != 0,"Pill doesnot exist"); //this doesn't work from manufacturere's perspective, need to add a modifier
 
         manufacturere.consumingThePill(_pillString,msg.sender);
-
 
     }
 
@@ -115,4 +113,10 @@ contract Consumer{
         (uint a, string memory b) = manufacturere.parentMapping(_index);
         return (a,b);
     }
+
+    // Checking keccak256
+    function keccakOfNumber(uint _temp) pure public returns (bytes32){
+        return keccak256(abi.encodePacked(_temp));
+    }
+
 }
