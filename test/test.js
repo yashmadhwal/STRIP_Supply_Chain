@@ -31,13 +31,6 @@ contract('TestManufacturerContract', () => {
     // assert(result === 'HelloSomething');
   });
 
-  it('keccak256 Function is working fine', async () => {
-    const manufacturer = await Manufacturer.deployed();
-    const byterReturn = await manufacturer.keccakOfNumber(1);
-    assert(byterReturn ==='0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6');
-  });
-
-
 });
 
 contract('TestConsumerContract', () => {
@@ -59,6 +52,13 @@ contract('TestConsumerContract', () => {
     const consumePill = await consumer.consumeThePill(1);
 
   });
+
+  it('keccak256 Function is working fine', async () => {
+    const consumer = await Consumer.deployed();
+    const byterReturn = await consumer.keccakOfNumber(1);
+    assert(byterReturn ==='0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cf6');
+  });
+
 
 
 });
