@@ -90,13 +90,16 @@ def createPills():
         #     'gasPrice': w3.toWei('40', 'gwei')
         #     }
         bid_txn_hash = manufacturer_contract.functions.createpills().transact({'from':manufacturer_address})
-        #bid_txn_receipt = w3.eth.waitForTransactionReceipt(bid_txn_hash)
-        #print(bid_txn_receipt)
+        tx_receipt = w3.eth.waitForTransactionReceipt(bid_txn_hash.hex())
+        print(tx_receipt)
+        logs = manufacturer_contract.events.PillCreated().processReceipt(tx_receipt)
+        # logs[0]['args']['description']
+        # logs[0]['args']['message']
     except ValueError as e:
         print(e)
         return render_template('contract_error.html', contract_error=e)
 
-    return render_template('index.html',TransactionHash = bid_txn_hash,creationStatus='Created')
+    return render_template('index.html',TransactionHash = bid_txn_hash.hex(),creationStatus='Created', EmitedMessage1 = logs[0]['args']['message'],EmitedMessage2 = logs[0]['args']['description'])
 
 # Talking about Consumer
 consumerContract = json.load(open('./build/contracts/Consumer.json'))
