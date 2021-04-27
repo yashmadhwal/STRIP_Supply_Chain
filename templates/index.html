@@ -47,19 +47,25 @@
         </div><br>
         <div class="input-group">
             <form method="POST" action="/consumePill">
+            <div class="">
             <input type="text" name="ConsumerAddress" required placeholder="ConsumerAddress"/><br>
-<br>
             <input type="text" name="KeccakSecret" required placeholder="Secret"/>
+            </div>
+
 <br>
             <div class="consumePillBtn">
                 <button class="btn" id="button-hbid">consume Pill</button>
             </div>
 
             </form>
+            <div class="EmitMessageConsume">
+              Pill: {{EmitedMessageConsume1}} <br> ConsumedBy: {{EmitedMessageConsume2}}
+            </div>
         </div>
     </div>
     <h3 class="text message">keccak256:&nbsp;<span id="msghbidder">{{ keccak256 }}</span></h3>
-    <h3 class="text message">Status(Tx_Id):&nbsp;<span id="msghbid">{{ Status }}</span></h3>
+    <h3 class="text message">TransactionHash:&nbsp;<span id="msghbid">{{ TxH }}</span></h3>
+    <h3 class="text message">Status:&nbsp;<span id="msghbid">{{ Status }}</span></h3>
 <hr>
     <div method="GET" class='reset'>
       <form action="/">

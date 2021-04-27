@@ -76,11 +76,29 @@ def consumePill():
     print(w3.isConnected())
 
     consumer_address = request.form.get("ConsumerAddress")
-    secrete_key = request.form.get("KeccakSecret")
 
-    consumed = consumer_contract_instance.functions.consumeThePill(int(secrete_key)).transact({'from':consumer_address})
-    print(consumer_contract_instance)
-    return render_template('index.html', Status=consumed.hex())
+    print(consumer_address)
+
+    if not w3.isAddress(consumer_address):
+        print("Invalid address", file=sys.stderr)
+        return render_template('validation_error.html', val_err1="Invalid Address")
+
+    try:
+        secrete_key = request.form.get("KeccakSecret")
+
+        consumed = consumer_contract_instance.functions.consumeThePill(int(secrete_key)).transact({'from':consumer_address})
+        print(consumer_contract_instance)
+        tx_receipt = w3.eth.waitForTransactionReceipt(consumed.hex())
+        print(tx_receipt)
+        logs = consumer_contract_instance.events.EatPill().processReceipt(tx_receipt)
+
+    except ValueError as e:
+        print(e)
+        return render_template('contract_error.html', contract_error=e)
+
+    print(logs)
+
+    return render_template('index.html', TxH=consumed.hex(),Status = 'Consumed', EmitedMessageConsume1 = logs[0]['args']['_indexed'],EmitedMessageConsume2 = logs[0]['args']['consumer'])
 
 
 if __name__ == '__main__':

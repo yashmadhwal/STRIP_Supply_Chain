@@ -13,7 +13,7 @@ contract Manufacturer{
     // consumer data
     Consumer consumer; //Public keyword not required for truffle project
 
-    event PillCreated(string message, uint indexed description);
+    event PillCreated(string message, uint description);
 
     struct Medicine{
         uint Description; //this will be equal to the production number, we will have it in the form of QR simple sequece number. i.e. unique id, Also we assume that it is a _secrete
@@ -99,12 +99,16 @@ contract Consumer{
         manufacturere = Manufacturer(_manufacturereAddress);
     }
 
+    event EatPill(uint _indexed, address consumer);
+
     function consumeThePill(uint _pillString) public {
         //checking if the pill exists or not, if not the it is fake, else will be marked as consumed
         (uint pillToSearch,) = manufacturere.parentMapping(_pillString);
         require(pillToSearch != 0,"Pill doesnot exist"); //this doesn't work from manufacturere's perspective, need to add a modifier
 
         manufacturere.consumingThePill(_pillString,msg.sender);
+
+        emit EatPill(_pillString,msg.sender);
 
     }
 
