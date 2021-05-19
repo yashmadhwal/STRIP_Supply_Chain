@@ -86,7 +86,7 @@ def consumePill():
     try:
         secrete_key = request.form.get("KeccakSecret")
 
-        consumed = consumer_contract_instance.functions.consumeThePill(int(secrete_key)).transact({'from':consumer_address})
+        consumed = consumer_contract_instance.functions.consumeThePill(int(secrete_key)).transact({'from':consumer_address,'value':1500000000000000000})
         print(consumer_contract_instance)
         tx_receipt = w3.eth.waitForTransactionReceipt(consumed.hex())
         print(tx_receipt)
