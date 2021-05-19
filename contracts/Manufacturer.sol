@@ -1,19 +1,19 @@
 // SPDX-License-Identifier: MIT
 // STRIP project
 
-pragma solidity <0.6.5;
+pragma solidity <6.4.0;
 
 contract Manufacturer{
 
     // Manufacturer Name
-    address public owner;
+    address payable owner;
     string public company;
     uint public produnctionSequece; //start from 1; because default if 0, and we take a flag/marked that is such exists it is a fake one.
 
     // consumer data
-    Consumer consumer; //Public keyword not required for truffle project
+    Consumer public consumer;
 
-    event PillCreated(string message, uint description);
+    event PillCreated(string message, uint indexed description);
 
     struct Medicine{
         uint Description; //this will be equal to the production number, we will have it in the form of QR simple sequece number. i.e. unique id, Also we assume that it is a _secrete
@@ -36,7 +36,6 @@ contract Manufacturer{
     constructor() public {
         owner = msg.sender;
         company = 'PharmaCompany'; //Pfizer U.S. Pharmaceulicals Gr
-        // NOTE: Such method to deploy another contract, it is better when deploying using functionName
         // consumer = new Consumer(address(this));
         produnctionSequece = 1;  //start from 1; because default if 0, and we take a flag/marked that is such exists it is a fake one.
     }
@@ -84,31 +83,31 @@ contract Manufacturer{
     return (pillBook[_secrete].Description, pillBook[_secrete].imprints);
     }
 
-
-    // Checking keccak256
-    function keccakOfNumber(uint _temp) pure public returns (bytes32){
-        return keccak256(abi.encodePacked(_temp));
+    function contractOwner() public view returns(address){
+        return owner;
     }
 }
+
+
 
 contract Consumer{
 
     Manufacturer manufacturere;
 
+    address payable public pillcreator;
+
     constructor(address _manufacturereAddress) public {
         manufacturere = Manufacturer(_manufacturereAddress);
+        pillcreator = payable(manufacturere.contractOwner());
     }
 
-    event EatPill(uint _indexed, address consumer);
-
-    function consumeThePill(uint _pillString) public {
+    function consumeThePill(uint _pillString) public payable {
         //checking if the pill exists or not, if not the it is fake, else will be marked as consumed
         (uint pillToSearch,) = manufacturere.parentMapping(_pillString);
         require(pillToSearch != 0,"Pill doesnot exist"); //this doesn't work from manufacturere's perspective, need to add a modifier
 
         manufacturere.consumingThePill(_pillString,msg.sender);
-
-        emit EatPill(_pillString,msg.sender);
+        pillcreator.transfer(msg.value);
 
     }
 
@@ -122,5 +121,6 @@ contract Consumer{
     function keccakOfNumber(uint _temp) pure public returns (bytes32){
         return keccak256(abi.encodePacked(_temp));
     }
+
 
 }
