@@ -100,6 +100,7 @@ contract Consumer{
         manufacturere = Manufacturer(_manufacturereAddress);
         pillcreator = payable(manufacturere.contractOwner());
     }
+    event EatPill(uint _indexed, address consumer);
 
     function consumeThePill(uint _pillString) public payable {
         //checking if the pill exists or not, if not the it is fake, else will be marked as consumed
@@ -108,6 +109,8 @@ contract Consumer{
 
         manufacturere.consumingThePill(_pillString,msg.sender);
         pillcreator.transfer(msg.value);
+
+        emit EatPill(_pillString,msg.sender);
 
     }
 
